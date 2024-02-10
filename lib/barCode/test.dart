@@ -233,6 +233,6 @@ class ProductList extends StatelessWidget {
   }
 
   Future<void> deleteProduct(String productId) async {
-    await FirebaseFirestore.instance.collection('product').doc(productId).delete();
+    await FirebaseFirestore.instance.collection('products').doc(productId).delete();
   }
 }
