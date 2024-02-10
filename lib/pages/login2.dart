@@ -1,11 +1,6 @@
-//import 'dart:js';
-
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:notes_app/constants.dart';
 import 'package:notes_app/pages/signup.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-
 import '../firebase_auth_implemnetation/auth.dart';
 
 class Login2 extends StatefulWidget {
@@ -116,7 +111,7 @@ class _Login2State extends State<Login2> {
                       SizedBox(height: 20),
 
                       ElevatedButton(
-                        onPressed: () {     auth.signIn(myEmail.text, myPwd.text, context);
+                        onPressed: () {auth.signIn(myEmail.text, myPwd.text, context);
                         },
                         style: ElevatedButton.styleFrom(
                           elevation: 5,
