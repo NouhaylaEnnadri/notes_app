@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import '../barCode/test.dart';
 import '../pages/login.dart';
 import '../pages/login2.dart';
 
@@ -39,7 +40,7 @@ class Auth {
       );
 
       // If sign-in is successful, navigate to the home page or any desired page
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Login()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => test()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
