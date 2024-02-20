@@ -170,6 +170,7 @@ class _Login2State extends State<Login2> {
                               width: 32, // Set the desired width
                               height: 32, // Set the desired height
                               child: Image.asset('images/twitter.png'),
+                             // child:
                             ),
                           ),
                         ],
