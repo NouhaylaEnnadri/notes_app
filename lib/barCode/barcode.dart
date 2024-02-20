@@ -1,9 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
-void main() => runApp(BarcodeApp());
+import 'test.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(BarcodeApp());
+}
 
 class BarcodeApp extends StatelessWidget {
   @override
@@ -185,27 +192,56 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Barcode scan')),
-      body: SingleChildScrollView(
-        child: Builder(builder: (BuildContext context) {
-          return Container(
-            alignment: Alignment.center,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                ElevatedButton(
-                  onPressed: () => scanBarcodeNormal(),
-                  child: Text('Start barcode scan'),
+    return MaterialApp(
+      home: DefaultTabController(
+        initialIndex: 0,
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Gestion de stock'),
+            bottom: const TabBar(
+              tabs: <Widget>[
+                Tab(
+                  icon: Icon(Icons.add_shopping_cart),
+                  text: "Vendre",
                 ),
-                ElevatedButton(
-                  onPressed: () => scanQR(),
-                  child: Text('Start QR scan'),
+                Tab(
+                  icon: Icon(Icons.list),
+                  text: "Stock",
                 ),
               ],
             ),
-          );
-        }),
+          ),
+          body:  TabBarView(
+            children: <Widget>[
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    ElevatedButton(
+                      onPressed: () => scanBarcodeNormal(),
+                      child: Text('Start barcode scan'),
+                    ),
+                    ElevatedButton(
+                      onPressed: () => scanQR(),
+                      child: Text('Start QR scan'),
+                    ),
+                  ],
+                ),
+              ),
+              Center(
+                child: ProductList(),
+              ),
+
+              // ProductList(),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => scanBarcodeNormal(),
+            tooltip: 'Add Product',
+            child: Icon(Icons.add),
+          ),
+        ),
       ),
     );
   }

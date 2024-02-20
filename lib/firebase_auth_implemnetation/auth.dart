@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import '../barCode/barcode.dart';
 import '../barCode/test.dart';
 import '../pages/login.dart';
 import '../pages/login2.dart';
@@ -40,7 +42,7 @@ class Auth {
       );
 
       // If sign-in is successful, navigate to the home page or any desired page
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => test()));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BarcodeApp()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
@@ -52,6 +54,33 @@ class Auth {
 
       // You can show relevant error messages to the user using Fluttertoast or other UI components
       Fluttertoast.showToast(msg: "Sign-in failed. Please check your credentials.");
+    } catch (e) {
+      print('Unexpected error during sign in: $e');
+    }
+  }
+  Future<void> signInWithGoogle(BuildContext context) async {
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+
+    try {
+      // Sign out the user before initiating the sign-in process
+      await _auth.signOut();
+      await _googleSignIn.signOut();
+
+      final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
+
+      if (googleSignInAccount != null) {
+        final GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken,
+        );
+
+        await _auth.signInWithCredential(credential);
+
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => BarcodeApp())); // Assuming Test is the correct widget
+      }
     } catch (e) {
       print('Unexpected error during sign in: $e');
     }

@@ -41,6 +41,7 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   cloud_firestore: ^4.13.6
   firebase_ui_firestore: ^1.5.15
+  google_sign_in: ^6.2.1
 
 
 

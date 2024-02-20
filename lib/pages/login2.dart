@@ -87,7 +87,7 @@ class _Login2State extends State<Login2> {
                       ),
                       TextField(
 
-                         controller: myPwd,
+                        controller: myPwd,
                         decoration: InputDecoration(
                             suffixIcon: Icon(Icons.password)),
                         obscureText: true,
@@ -153,17 +153,23 @@ class _Login2State extends State<Login2> {
                             ),
                           ),
                           Tab(
-                            icon: SizedBox(
-                              width: 32, // Set the desired width
-                              height: 32, // Set the desired height
-                              child: Image.asset('images/twitter.png'),
+                            icon: GestureDetector(
+                              onTap: () {
+                                auth.signInWithGoogle(context); // Make sure to pass the context if needed
+                              },
+                              child: SizedBox(
+                                width: 32,
+                                height: 32,
+                                child: Image.asset('images/google.png'),
+                              ),
                             ),
                           ),
+
                           Tab(
                             icon: SizedBox(
                               width: 32, // Set the desired width
                               height: 32, // Set the desired height
-                              child: Image.asset('images/github.png'),
+                              child: Image.asset('images/twitter.png'),
                             ),
                           ),
                         ],
@@ -180,4 +186,3 @@ class _Login2State extends State<Login2> {
   }
 
 }
-
